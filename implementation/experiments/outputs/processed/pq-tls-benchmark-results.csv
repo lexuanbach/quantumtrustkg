@@ -1,0 +1,4 @@
+mode,group,status,openssl_version,providers,duration_s,handshakes_per_s,p50_ms,p95_ms,cpu_pct,rss_mb,notes
+classical_tls13,X25519,available-run-required,OpenSSL 3.6.2 7 Apr 2026 (Library: OpenSSL 3.6.2 7 Apr 2026),default,3,,,,,,Runner records availability; execute in an oqs-provider environment for PQ rows.
+hybrid_mlkem,X25519MLKEM768,unavailable-oqs-provider-or-group-missing,OpenSSL 3.6.2 7 Apr 2026 (Library: OpenSSL 3.6.2 7 Apr 2026),default,3,,,,,,Runner records availability; execute in an oqs-provider environment for PQ rows.
+pure_pq,MLKEM768,unavailable-oqs-provider-or-group-missing,OpenSSL 3.6.2 7 Apr 2026 (Library: OpenSSL 3.6.2 7 Apr 2026),default,3,,,,,,Runner records availability; execute in an oqs-provider environment for PQ rows.

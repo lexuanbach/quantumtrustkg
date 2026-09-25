@@ -1,0 +1,4 @@
+edge,profile,group,status,negotiated_group,trials,successes,p50_ms,p95_ms,openssl_version,providers,notes
+Checkout->Payment,classical_tls13,X25519,passed,X25519,30,30,9.337,13.453,OpenSSL 3.6.2 7 Apr 2026 (Library: OpenSSL 3.6.2 7 Apr 2026),default,Negotiated group observed by openssl s_client
+Checkout->Payment,hybrid_mlkem,X25519MLKEM768,passed,X25519MLKEM768,30,30,9.310,14.121,OpenSSL 3.6.2 7 Apr 2026 (Library: OpenSSL 3.6.2 7 Apr 2026),default,Negotiated group observed by openssl s_client
+Checkout->Payment,pure_pq,MLKEM768,passed,MLKEM768,30,30,9.213,14.430,OpenSSL 3.6.2 7 Apr 2026 (Library: OpenSSL 3.6.2 7 Apr 2026),default,Negotiated group observed by openssl s_client

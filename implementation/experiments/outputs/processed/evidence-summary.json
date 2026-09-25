@@ -1,0 +1,136 @@
+{
+  "generated_at": "2026-09-24T17:53:22+00:00",
+  "repo_root": ".",
+  "steps": [
+    {
+      "command": "make -C implementation/controller test",
+      "duration_s": 2.645,
+      "name": "controller_tests",
+      "note": "",
+      "output_tail": "go test ./...\n?   \tquantumtrustkg/controller/cmd/baseline-compare\t[no test files]\n?   \tquantumtrustkg/controller/cmd/decision-trace\t[no test files]\n?   \tquantumtrustkg/controller/cmd/manager\t[no test files]\n?   \tquantumtrustkg/controller/cmd/scale-stress\t[no test files]\n?   \tquantumtrustkg/controller/cmd/staleness-sweep\t[no test files]\nok  \tquantumtrustkg/controller/internal/controllers\t0.747s\n?   \tquantumtrustkg/controller/internal/graph\t[no test files]\n?   \tquantumtrustkg/controller/internal/mesh\t[no test files]\n?   \tquantumtrustkg/controller/internal/observability\t[no test files]\n?   \tquantumtrustkg/controller/internal/orchestration\t[no test files]\n?   \tquantumtrustkg/controller/internal/state\t[no test files]\n?   \tquantumtrustkg/controller/pkg/types\t[no test files]\nok  \tquantumtrustkg/controller/tests/unit\t1.431s",
+      "returncode": 0,
+      "status": "passed"
+    },
+    {
+      "artifacts": [
+        "implementation/experiments/outputs/processed/scale-stress-results.csv"
+      ],
+      "command": "go run ./cmd/scale-stress --fixtures ../semantics/fixtures/scale-500.ttl,../semantics/fixtures/scale-1000.ttl,../semantics/fixtures/scale-2000.ttl --iterations 7 --out ../experiments/outputs/processed/scale-stress-results.csv",
+      "duration_s": 0.719,
+      "name": "scale_stress_csv",
+      "note": "",
+      "output_tail": "",
+      "returncode": 0,
+      "rows": 3,
+      "scales": [
+        "500",
+        "1000",
+        "2000"
+      ],
+      "status": "passed"
+    },
+    {
+      "artifacts": [
+        "implementation/semantics/fixtures/online-boutique.ttl",
+        "implementation/experiments/outputs/processed/online-boutique-decision-trace.json"
+      ],
+      "command": "sh -c python3 ../tools/generators/generate_online_boutique_fixture.py --out ../semantics/fixtures/online-boutique.ttl && go run ./cmd/decision-trace --fixture online-boutique.ttl --source Checkout --destination Payment --out ../experiments/outputs/processed/online-boutique-decision-trace.json",
+      "duration_s": 0.646,
+      "fixture_edges": 11,
+      "fixture_services": 11,
+      "name": "online_boutique_trace",
+      "note": "",
+      "output_tail": "",
+      "returncode": 0,
+      "selected_profile": "QuantumSafeProfile",
+      "status": "passed",
+      "trace_edge": "Checkout->Payment"
+    },
+    {
+      "artifacts": [
+        "implementation/experiments/outputs/processed/pq-tls-benchmark-results.csv"
+      ],
+      "command": "python3 implementation/experiments/scripts/run-pq-tls-benchmark.py --out implementation/experiments/outputs/processed/pq-tls-benchmark-results.csv",
+      "duration_s": 0.053,
+      "name": "pq_tls_availability",
+      "note": "one or more OpenSSL/OQS groups are unavailable",
+      "output_tail": "",
+      "returncode": 0,
+      "status": "unavailable",
+      "tls_statuses": [
+        "available-run-required",
+        "unavailable-oqs-provider-or-group-missing"
+      ]
+    },
+    {
+      "artifacts": [
+        "implementation/experiments/outputs/processed/wire-tls-validation.csv"
+      ],
+      "command": "python3 implementation/experiments/scripts/run-wire-tls-validation.py --out implementation/experiments/outputs/processed/wire-tls-validation.csv",
+      "duration_s": 1.922,
+      "name": "wire_tls_validation",
+      "negotiated_groups": [
+        "MLKEM768",
+        "X25519",
+        "X25519MLKEM768"
+      ],
+      "note": "",
+      "output_tail": "",
+      "returncode": 0,
+      "status": "passed",
+      "wire_tls_statuses": [
+        "passed"
+      ]
+    },
+    {
+      "artifacts": [
+        "implementation/experiments/outputs/processed/controller-scale-results.csv",
+        "implementation/experiments/outputs/processed/controller-churn-results.csv"
+      ],
+      "command": "python3 implementation/experiments/scripts/run-controller-scale-churn.py --scale-out implementation/experiments/outputs/processed/controller-scale-results.csv --churn-out implementation/experiments/outputs/processed/controller-churn-results.csv",
+      "duration_s": 0.034,
+      "harness_statuses": [
+        "not-run-kind-unavailable"
+      ],
+      "name": "controller_scale_churn_harness",
+      "note": "kind is unavailable, so full-controller timing rows were not run",
+      "output_tail": "",
+      "returncode": 0,
+      "status": "skipped"
+    },
+    {
+      "command": "make -C formal/coq COQC=rocq compile",
+      "duration_s": 0.445,
+      "name": "coq_rocq_checks",
+      "note": "",
+      "output_tail": "rocq compile -Q . QuantumTrustKG Model.v\nrocq compile -Q . QuantumTrustKG QTPO.v\nrocq compile -Q . QuantumTrustKG Guarantees.v\nrocq compile -Q . QuantumTrustKG Examples.v",
+      "returncode": 0,
+      "status": "passed"
+    },
+    {
+      "artifacts": [
+        "implementation/experiments/outputs/processed/fault-injection-results.csv",
+        "implementation/experiments/outputs/processed/blocked-safe-breakdown.csv",
+        "implementation/experiments/outputs/processed/compliance-wilson.csv",
+        "implementation/experiments/outputs/processed/latency-results.csv",
+        "implementation/experiments/outputs/processed/setup-cost-results.csv",
+        "implementation/experiments/outputs/processed/setup-cost-perturbation.csv",
+        "implementation/experiments/outputs/processed/oqs-calibration-bias.csv",
+        "implementation/experiments/outputs/processed/online-boutique-rq-stats.csv",
+        "implementation/experiments/outputs/processed/paper-results-summary.md"
+      ],
+      "command": "python3 implementation/experiments/scripts/run-paper-results.py",
+      "duration_s": 0.038,
+      "name": "paper_results_canonical_replay",
+      "note": "",
+      "output_tail": "",
+      "returncode": 0,
+      "status": "passed"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "skipped": 1,
+    "unavailable": 1
+  }
+}

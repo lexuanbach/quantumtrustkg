@@ -1,0 +1,7 @@
+services,updates_per_min,duration_min,mode,status,reconcile_p50_ms,reconcile_p95_ms,fuseki_update_ms,graph_triples,queue_backlog_max,unsafe_promotions,preserved_assignments,convergence_s,notes
+200,50,10,fixture-churn-scope,not-run-kind-unavailable,,,,,,0,,,Run under kind to populate timing and convergence metrics.
+200,100,10,fixture-churn-scope,not-run-kind-unavailable,,,,,,0,,,Run under kind to populate timing and convergence metrics.
+200,250,10,fixture-churn-scope,not-run-kind-unavailable,,,,,,0,,,Run under kind to populate timing and convergence metrics.
+500,50,10,fixture-churn-scope,not-run-kind-unavailable,,,,,,0,,,Run under kind to populate timing and convergence metrics.
+500,100,10,fixture-churn-scope,not-run-kind-unavailable,,,,,,0,,,Run under kind to populate timing and convergence metrics.
+500,250,10,fixture-churn-scope,not-run-kind-unavailable,,,,,,0,,,Run under kind to populate timing and convergence metrics.

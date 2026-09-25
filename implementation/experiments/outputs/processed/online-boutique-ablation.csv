@@ -1,0 +1,3 @@
+fixture,method,correct_promotion_pct,unsafe_promotion_pct,unsafe_promotions,blocked_safe,managed_edges,reps,valid_promotions,invalid_promotions,no_promotion,retained_active
+online-boutique,QTKG,100.00,0.00,0,12,330,30,318,0,12,0
+online-boutique,NoKG,100.00,3.64,12,0,330,30,318,12,0,0

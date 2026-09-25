@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: paymentToLedger-tls
+  namespace: finance
+  labels:
+    app.kubernetes.io/managed-by: quantumtrustkg
+  annotations:
+    quantumtrustkg.io/edge-id: paymentToLedger
+    quantumtrustkg.io/profile: QuantumSafeProfile
+    quantumtrustkg.io/trust-boundary: regulated
+spec:
+  host: Ledger.finance.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+      sni: Ledger.finance.svc.cluster.local
+    connectionPool:
+      tcp:
+        maxConnections: 16

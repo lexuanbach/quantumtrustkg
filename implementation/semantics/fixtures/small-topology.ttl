@@ -1,0 +1,22 @@
+@prefix : <http://quantumtrustkg.io/ontology#> .
+
+:frontend a :Service .
+:auth a :Service .
+:payment a :Service .
+
+:frontend :supportsProfile :HybridProfile .
+:auth :supportsProfile :HybridProfile, :QuantumSafeProfile .
+:payment :supportsProfile :QuantumSafeProfile .
+
+:HybridProfile a :Protocol .
+:QuantumSafeProfile a :Protocol .
+
+:edge_frontend_auth a :Communication ;
+  :sourceService :frontend ;
+  :destinationService :auth ;
+  :crossesBoundary "internal" .
+
+:edge_auth_payment a :Communication ;
+  :sourceService :auth ;
+  :destinationService :payment ;
+  :crossesBoundary "regulated" .

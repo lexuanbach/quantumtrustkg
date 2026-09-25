@@ -1,0 +1,11 @@
+PREFIX : <http://quantumtrustkg.io/ontology#>
+
+SELECT ?protocol ?category ?overhead
+WHERE {
+  ?comm a :Communication ;
+        :sourceService ?src ;
+        :destinationService ?dst .
+  ?protocol a :Protocol ;
+            :hasSecurityCategory ?category ;
+            :hasOverheadScore ?overhead .
+}

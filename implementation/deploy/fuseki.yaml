@@ -1,0 +1,48 @@
+# Apache Jena Fuseki deployment and service (Sect. 3, graph-backed evidence).
+#
+# Fuseki holds the Quantum Trust Graph as RDF and answers the SPARQL queries of the
+# controller. FUSEKI_DATASET_1 creates the dataset quantumtrustkg, which the
+# controller reaches at http://fuseki:3030/quantumtrustkg (the default in
+# cmd/manager) through the Service defined below. This is the store whose
+# availability the fail-closed rule of Thm. 2 depends on. Limitation: the admin
+# password is a fixed test value and there is no persistent volume, which means this manifest
+# is for the evaluation testbed and not for production.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fuseki
+  namespace: quantumtrustkg-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fuseki
+  template:
+    metadata:
+      labels:
+        app: fuseki
+    spec:
+      containers:
+        - name: fuseki
+          image: stain/jena-fuseki:5.1.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ADMIN_PASSWORD
+              value: quantumtrustkg
+            - name: FUSEKI_DATASET_1
+              value: quantumtrustkg
+          ports:
+            - containerPort: 3030
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fuseki
+  namespace: quantumtrustkg-system
+spec:
+  selector:
+    app: fuseki
+  ports:
+    - name: http
+      port: 3030
+      targetPort: 3030

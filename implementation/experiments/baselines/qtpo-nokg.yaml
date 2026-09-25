@@ -1,0 +1,16 @@
+# Descriptor of the QTPO-NoKG ablation (Sect. 4.1, RQ1 and RQ2). It keeps the
+# filters, the ranking weights, the hysteresis and the mesh readiness checks of QTPO
+# and removes the graph joins, the per-edge provenance reification and the SPARQL
+# inference. It corresponds to evalNoKG in cmd/baseline-compare and
+# cmd/staleness-sweep. No program reads this file.
+kind: QTPONoKGBaseline
+metadata:
+  name: flat-state-qtpo-ablation
+spec:
+  filterOrder: same-as-qtpo
+  rankingWeights: same-as-qtpo
+  hysteresis: same-as-qtpo
+  meshReadinessChecks: enabled
+  graphJoins: disabled
+  edgeLevelProvenanceReification: disabled
+  sparqlInference: disabled

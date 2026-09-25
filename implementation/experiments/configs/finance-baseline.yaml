@@ -1,0 +1,18 @@
+# Configuration sketch for a comparison on the finance fixture: fixture name, 30
+# iterations, the baselines to compare and the metrics to report. No program reads
+# this file. The reported comparisons come from cmd/baseline-compare, whose scenarios
+# and seeds are set on its command line (see implementation/Makefile).
+name: finance-baseline
+fixture: finance-scenario.ttl
+iterations: 30
+baselines:
+  - semantic-controller
+  - qtpo-nokg
+  - static-istio
+  - opa-guided
+  - greedy-non-kg
+metrics:
+  - compliance_rate
+  - controller_latency_ms
+  - blocked_assignments
+  - promoted_assignments

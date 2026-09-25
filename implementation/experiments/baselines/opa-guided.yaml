@@ -1,0 +1,13 @@
+# Descriptor of a policy-as-code baseline: flat policy input with freshness as
+# plain fields, no first-class temporal contradiction and no graph joins. It
+# corresponds to evalOPA in cmd/baseline-compare, which is not in the method list of
+# Table 1. No program reads this file.
+kind: OPAGuidedBaseline
+metadata:
+  name: flat-policy-json
+spec:
+  policyInput: sensitivity-labels-trust-boundaries-endpoint-support-selector-overlays
+  provenanceModel: freshness-as-flat-fields
+  temporalContradictions: not-first-class
+  graphJoins: disabled
+  ranking: lowest-overhead-policy-admissible

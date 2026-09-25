@@ -1,0 +1,17 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: authToPayment-mtls
+  namespace: finance
+  labels:
+    app.kubernetes.io/managed-by: quantumtrustkg
+  annotations:
+    quantumtrustkg.io/edge-id: authToPayment
+    quantumtrustkg.io/profile: QuantumSafeProfile
+    quantumtrustkg.io/security-level: quantum_safe
+spec:
+  selector:
+    matchLabels:
+      app: Payment
+  mtls:
+    mode: STRICT

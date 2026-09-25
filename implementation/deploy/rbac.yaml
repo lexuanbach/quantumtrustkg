@@ -1,0 +1,47 @@
+# Permissions of the controller (Sect. 3, implementation).
+#
+# The ClusterRole lets the controller read pods, services and namespaces, create
+# and update the Istio PeerAuthentication and DestinationRule objects it
+# synthesizes, read the four quantumtrustkg.io resources and write them, and manage
+# the coordination lease used for leader election. The binding attaches the role to
+# the service account of serviceaccount.yaml.
+#
+# Limitation: the paper names RBAC separation of publishers, policy authors and the
+# status writer as the integrity boundary (Sect. 3). This manifest is one role for
+# the controller. It does not define separate roles for those principals. The role
+# also lists assignmentstatuses without the assignmentstatuses/status subresource,
+# which the status write of the controller uses.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: quantumtrustkg-controller
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "events", "namespaces"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["networking.istio.io", "security.istio.io"]
+    resources: ["destinationrules", "peerauthentications"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  - apiGroups: ["quantumtrustkg.io"]
+    resources:
+      ["quantumsecuritypolicies", "cryptocapabilityprofiles", "migrationplans", "assignmentstatuses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: quantumtrustkg-controller
+subjects:
+  - kind: ServiceAccount
+    name: quantumtrustkg-controller
+    namespace: quantumtrustkg-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: quantumtrustkg-controller

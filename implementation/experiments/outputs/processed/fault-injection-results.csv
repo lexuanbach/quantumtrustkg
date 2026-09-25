@@ -1,0 +1,6 @@
+scenario,fault_description,affected_edges,unsafe_promotions,blocked_edges,preserved_active,recovery,status_reason
+stale-fact,Capability observation past :freshUntil window,2,0,2,0,Fresh observation unblocks on next reconcile,stale-facts
+contradictory-fact,Support claim conflicts with newer advisory,1,0,1,0,"Remove or supersede advisory, then replay",conflicting-facts
+graph-outage,Fuseki ping/query fails at reconcile start,3,0,3,1,"Resync from Services, CRDs, and status objects",graph-unavailable;graph-unavailable-preserved-active
+mesh-mismatch,Staged batch reports unhealthy readiness,2,0,2,1,Rollback phase freezes further batches,observed-unhealthy;rollback-triggered
+policy-conflict,Strict PQ policy meets hybrid-only endpoints,2,0,2,1,Add a feasible profile or authorize explicit fallback,no-admissible-profile

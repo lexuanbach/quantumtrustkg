@@ -1,0 +1,17 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: frontendToAuth-mtls
+  namespace: finance
+  labels:
+    app.kubernetes.io/managed-by: quantumtrustkg
+  annotations:
+    quantumtrustkg.io/edge-id: frontendToAuth
+    quantumtrustkg.io/profile: HybridProfile
+    quantumtrustkg.io/security-level: hybrid
+spec:
+  selector:
+    matchLabels:
+      app: Auth
+  mtls:
+    mode: STRICT

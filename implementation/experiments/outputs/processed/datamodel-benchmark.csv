@@ -1,0 +1,4 @@
+engine,fixture,services,edges,load_ms,query_ms,total_ms,admissible_edges,reference_admissible,provenance_model,repeats,notes
+relational-sqlite,scale-1000.ttl,1000,2000,7.116,2.534,9.651,1889,1889,bolt-on (extra columns/tables per fact),5,sqlite 3.53.2
+property-graph-networkx,scale-1000.ttl,1000,2000,5.876,0.953,6.829,1889,1889,per-node/edge props (partial),5,networkx 3.6.1
+rdf-rdflib-7.6.0,scale-1000.ttl,1000,2000,95.347,918.424,1013.77,1889,1889,native (named graphs / per-statement),5,rdflib parse + SPARQL join over shared support classes

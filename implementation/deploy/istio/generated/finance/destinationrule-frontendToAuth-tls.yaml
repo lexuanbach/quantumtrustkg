@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: frontendToAuth-tls
+  namespace: finance
+  labels:
+    app.kubernetes.io/managed-by: quantumtrustkg
+  annotations:
+    quantumtrustkg.io/edge-id: frontendToAuth
+    quantumtrustkg.io/profile: HybridProfile
+    quantumtrustkg.io/trust-boundary: internal
+spec:
+  host: Auth.finance.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+      sni: Auth.finance.svc.cluster.local
+    connectionPool:
+      tcp:
+        maxConnections: 32

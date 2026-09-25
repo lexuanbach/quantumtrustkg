@@ -1,0 +1,134 @@
+@prefix : <http://quantumtrustkg.io/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:Frontend a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile, :QuantumSafeProfile .
+
+:ProductCatalog a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile, :QuantumSafeProfile .
+
+:Currency a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile .
+
+:Cart a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile, :QuantumSafeProfile .
+
+:RedisCart a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile .
+
+:Checkout a :Service ;
+  :subjectTo :PCIPolicy ;
+  :supportsProfile :HybridProfile, :QuantumSafeProfile .
+
+:Payment a :Service ;
+  :subjectTo :PCIPolicy ;
+  :supportsProfile :HybridProfile, :QuantumSafeProfile .
+
+:Shipping a :Service ;
+  :subjectTo :PartnerPolicy ;
+  :supportsProfile :HybridProfile, :QuantumSafeProfile .
+
+:Email a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile .
+
+:Recommendation a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile .
+
+:Ad a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile .
+
+:HybridProfile a :Protocol ;
+  :hasSecurityCategory "hybrid" ;
+  :hasOverheadScore "1.2"^^xsd:decimal .
+
+:QuantumSafeProfile a :Protocol ;
+  :hasSecurityCategory "quantum_safe" ;
+  :hasOverheadScore "1.5"^^xsd:decimal .
+
+:DefaultInternalPolicy a :Policy ;
+  :requiresLevel "hybrid" .
+
+:PartnerPolicy a :Policy ;
+  :requiresLevel "hybrid" .
+
+:PCIPolicy a :Policy ;
+  :requiresLevel "quantum_safe" .
+
+:frontendToCheckout a :Communication ;
+  :sourceService :Frontend ;
+  :destinationService :Checkout ;
+  :crossesBoundary "internal" ;
+  :assignedProtocol :HybridProfile .
+
+:frontendToProductCatalog a :Communication ;
+  :sourceService :Frontend ;
+  :destinationService :ProductCatalog ;
+  :crossesBoundary "internal" ;
+  :assignedProtocol :HybridProfile .
+
+:frontendToCart a :Communication ;
+  :sourceService :Frontend ;
+  :destinationService :Cart ;
+  :crossesBoundary "internal" ;
+  :assignedProtocol :HybridProfile .
+
+:frontendToCurrency a :Communication ;
+  :sourceService :Frontend ;
+  :destinationService :Currency ;
+  :crossesBoundary "internal" ;
+  :assignedProtocol :HybridProfile .
+
+:checkoutToPayment a :Communication ;
+  :sourceService :Checkout ;
+  :destinationService :Payment ;
+  :crossesBoundary "regulated" ;
+  :assignedProtocol :HybridProfile .
+
+:checkoutToCart a :Communication ;
+  :sourceService :Checkout ;
+  :destinationService :Cart ;
+  :crossesBoundary "internal" ;
+  :assignedProtocol :HybridProfile .
+
+:checkoutToShipping a :Communication ;
+  :sourceService :Checkout ;
+  :destinationService :Shipping ;
+  :crossesBoundary "partner" ;
+  :assignedProtocol :HybridProfile .
+
+:checkoutToEmail a :Communication ;
+  :sourceService :Checkout ;
+  :destinationService :Email ;
+  :crossesBoundary "internal" ;
+  :assignedProtocol :HybridProfile .
+
+:cartToRedisCart a :Communication ;
+  :sourceService :Cart ;
+  :destinationService :RedisCart ;
+  :crossesBoundary "internal" ;
+  :assignedProtocol :HybridProfile .
+
+:recommendationToProductCatalog a :Communication ;
+  :sourceService :Recommendation ;
+  :destinationService :ProductCatalog ;
+  :crossesBoundary "internal" ;
+  :assignedProtocol :HybridProfile .
+
+:frontendToAd a :Communication ;
+  :sourceService :Frontend ;
+  :destinationService :Ad ;
+  :crossesBoundary "internal" ;
+  :assignedProtocol :HybridProfile .
+
+:onlineBoutiqueObservation a :Observation ;
+  :observedBy "online-boutique-fixture" ;
+  :observedAt "2026-05-10T09:00:00Z"^^xsd:dateTime ;
+  :freshUntil "2027-05-10T09:10:00Z"^^xsd:dateTime .

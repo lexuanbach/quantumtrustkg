@@ -1,0 +1,4 @@
+mode,group,status,handshakes,median_ms,mean_ms,rel_overhead_pct,negotiated,openssl_version
+classical_tls13,X25519,measured,300,8.746,8.883,0.0,X25519,OpenSSL 3.6.2 7 Apr 2026 (Library: OpenSSL 3.6.2 7 Apr 2026)
+hybrid_mlkem,X25519MLKEM768,measured,300,8.85,8.901,1.2,X25519MLKEM768,OpenSSL 3.6.2 7 Apr 2026 (Library: OpenSSL 3.6.2 7 Apr 2026)
+pure_pq,MLKEM768,measured,300,8.759,8.814,0.2,MLKEM768,OpenSSL 3.6.2 7 Apr 2026 (Library: OpenSSL 3.6.2 7 Apr 2026)

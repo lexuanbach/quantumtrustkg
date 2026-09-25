@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://quantumtrustkg.io/schemas/assignment.schema.json",
+  "title": "AssignmentStatus",
+  "type": "object",
+  "required": [
+    "sourceService",
+    "destinationService",
+    "state"
+  ],
+  "properties": {
+    "sourceService": {
+      "type": "string"
+    },
+    "destinationService": {
+      "type": "string"
+    },
+    "desiredProfile": {
+      "type": "string"
+    },
+    "activeProfile": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Validated",
+        "Applying",
+        "Promoted",
+        "Blocked",
+        "Rollback",
+        "Failed"
+      ]
+    },
+    "reason": {
+      "type": "string"
+    },
+    "lastEvaluatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

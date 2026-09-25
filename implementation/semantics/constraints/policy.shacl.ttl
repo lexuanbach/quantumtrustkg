@@ -1,0 +1,13 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix : <http://quantumtrustkg.io/ontology#> .
+
+:PolicyShape
+  a sh:NodeShape ;
+  sh:targetClass :Policy ;
+  sh:property [
+    sh:path :requiresLevel ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:in ( "classical" "hybrid" "quantum_safe" ) ;
+    sh:message "Every policy must declare a valid required security category." ;
+  ] .

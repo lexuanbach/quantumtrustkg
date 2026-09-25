@@ -1,0 +1,8 @@
+PREFIX : <http://quantumtrustkg.io/ontology#>
+
+SELECT ?comm ?protocol
+WHERE {
+  ?comm a :Communication ;
+        :assignedProtocol ?protocol .
+  ?protocol :hasSecurityCategory "classical" .
+}

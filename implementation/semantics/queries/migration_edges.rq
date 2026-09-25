@@ -1,0 +1,9 @@
+PREFIX : <http://quantumtrustkg.io/ontology#>
+
+SELECT ?comm ?desired ?active
+WHERE {
+  ?config a :Configuration ;
+          :hasDesiredAssignment ?desired ;
+          :hasActiveAssignment ?active .
+  FILTER(?desired != ?active)
+}

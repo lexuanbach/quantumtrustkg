@@ -1,0 +1,89 @@
+@prefix : <http://quantumtrustkg.io/ontology#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:Service a rdfs:Class .
+:Communication a rdfs:Class .
+:Algorithm a rdfs:Class .
+:Protocol a rdfs:Class .
+:Policy a rdfs:Class .
+:Configuration a rdfs:Class .
+:Observation a rdfs:Class .
+
+:supports a rdf:Property ;
+  rdfs:domain :Service ;
+  rdfs:range :Algorithm .
+
+:supportsProfile a rdf:Property ;
+  rdfs:domain :Service ;
+  rdfs:range :Protocol .
+
+:dependsOn a rdf:Property ;
+  rdfs:domain :Service ;
+  rdfs:range :Service .
+
+:subjectTo a rdf:Property ;
+  rdfs:domain :Service ;
+  rdfs:range :Policy .
+
+:sourceService a rdf:Property ;
+  rdfs:domain :Communication ;
+  rdfs:range :Service .
+
+:destinationService a rdf:Property ;
+  rdfs:domain :Communication ;
+  rdfs:range :Service .
+
+:crossesBoundary a rdf:Property ;
+  rdfs:domain :Communication ;
+  rdfs:range rdfs:Literal .
+
+:requiresLevel a rdf:Property ;
+  rdfs:domain :Policy ;
+  rdfs:range rdfs:Literal .
+
+:assignedProtocol a rdf:Property ;
+  rdfs:domain :Communication ;
+  rdfs:range :Protocol .
+
+:hasDesiredAssignment a rdf:Property ;
+  rdfs:domain :Configuration ;
+  rdfs:range :Protocol .
+
+:hasActiveAssignment a rdf:Property ;
+  rdfs:domain :Configuration ;
+  rdfs:range :Protocol .
+
+:observedBy a rdf:Property ;
+  rdfs:domain :Observation ;
+  rdfs:range rdfs:Literal .
+
+:observedAt a rdf:Property ;
+  rdfs:domain :Observation ;
+  rdfs:range xsd:dateTime .
+
+:freshUntil a rdf:Property ;
+  rdfs:domain :Observation ;
+  rdfs:range xsd:dateTime .
+
+:conflictNote a rdf:Property ;
+  rdfs:domain :Observation ;
+  rdfs:range rdfs:Literal .
+
+:hasSecurityCategory a rdf:Property ;
+  rdfs:domain :Protocol ;
+  rdfs:range rdfs:Literal .
+
+:hasOverheadScore a rdf:Property ;
+  rdfs:domain :Protocol ;
+  rdfs:range xsd:decimal .
+
+:PaymentFrontend a :Service .
+:PaymentService a :Service .
+:LedgerService a :Service .
+
+:frontendToPayment a :Communication ;
+  :sourceService :PaymentFrontend ;
+  :destinationService :PaymentService ;
+  :crossesBoundary "partner" .

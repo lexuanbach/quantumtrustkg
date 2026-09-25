@@ -1,0 +1,11 @@
+# Descriptor of a greedy baseline without the graph: the lowest-overhead
+# admissible profile from endpoint capability only, ignoring stale facts. It
+# corresponds to evalGreedy in cmd/baseline-compare, which is not in the method list
+# of Table 1. No program reads this file.
+kind: GreedyNonKGBaseline
+metadata:
+  name: endpoint-capability-only
+spec:
+  strategy: lowest-overhead-admissible
+  policyInput: derived-without-graph-propagation
+  staleFactHandling: ignore

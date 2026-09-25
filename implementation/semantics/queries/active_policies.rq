@@ -1,0 +1,8 @@
+PREFIX : <http://quantumtrustkg.io/ontology#>
+
+SELECT ?policy ?level
+WHERE {
+  ?service a :Service ;
+           :subjectTo ?policy .
+  ?policy :requiresLevel ?level .
+}

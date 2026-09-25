@@ -1,0 +1,7 @@
+PREFIX : <http://quantumtrustkg.io/ontology#>
+
+SELECT ?observation ?freshUntil
+WHERE {
+  ?observation a :Observation ;
+               :freshUntil ?freshUntil .
+}

@@ -1,0 +1,8 @@
+# Namespace quantumtrustkg-system (Sect. 3, implementation). It holds the
+# controller, the Fuseki graph store and the leader-election lease.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: quantumtrustkg-system
+  labels:
+    app.kubernetes.io/name: quantumtrustkg

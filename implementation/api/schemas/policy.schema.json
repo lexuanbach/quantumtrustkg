@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://quantumtrustkg.io/schemas/policy.schema.json",
+  "title": "QuantumSecurityPolicy",
+  "type": "object",
+  "required": [
+    "requiredSecurityCategory"
+  ],
+  "properties": {
+    "selector": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "requiredSecurityCategory": {
+      "type": "string",
+      "enum": [
+        "classical",
+        "hybrid",
+        "quantum_safe"
+      ]
+    },
+    "allowHybrid": {
+      "type": "boolean"
+    },
+    "compliance": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "trustBoundaryPolicy": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

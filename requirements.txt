@@ -1,0 +1,19 @@
+# Python packages for the figure script and the data-model microbenchmark.
+# Tested with Python 3.14.6 on macOS 26.5 (arm64). The other runner scripts use only
+# the standard library. Create the virtual environment outside the artifact folder,
+# because scripts/verify.sh rejects extra files inside it:
+#   python3 -m venv ../qtkg-venv && . ../qtkg-venv/bin/activate && pip install -r requirements.txt
+matplotlib==3.10.9
+rdflib==7.6.0
+networkx==3.6.1
+# Dependencies resolved by pip for the three packages above in the tested environment.
+contourpy==1.4.0
+cycler==0.12.1
+fonttools==4.66.0
+kiwisolver==1.5.1
+numpy==2.5.3
+packaging==26.3
+pillow==12.3.0
+pyparsing==3.3.3
+python-dateutil==2.9.0.post0
+six==1.17.0

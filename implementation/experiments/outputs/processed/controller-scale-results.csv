@@ -1,0 +1,5 @@
+services,communication_edges,mode,status,graph_sync_ms,reconcile_p50_ms,reconcile_p95_ms,istio_objects,status_writebacks,queue_backlog,rss_mb,unsafe_promotions,notes
+50,100,fixture-controller-scope,not-run-kind-unavailable,,12.0,,200,100,,,0,Full-controller numbers require kind; fixture row preserves workload size and expected object counts.
+100,200,fixture-controller-scope,not-run-kind-unavailable,,24.0,,400,200,,,0,Full-controller numbers require kind; fixture row preserves workload size and expected object counts.
+200,400,fixture-controller-scope,not-run-kind-unavailable,,45.0,,800,400,,,0,Full-controller numbers require kind; fixture row preserves workload size and expected object counts.
+500,1000,fixture-controller-scope,not-run-kind-unavailable,,,,2000,1000,,,0,Full-controller numbers require kind; fixture row preserves workload size and expected object counts.

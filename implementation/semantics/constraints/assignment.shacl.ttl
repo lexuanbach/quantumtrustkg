@@ -1,0 +1,21 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix : <http://quantumtrustkg.io/ontology#> .
+
+:AssignmentShape
+  a sh:NodeShape ;
+  sh:targetClass :Communication ;
+  sh:property [
+    sh:path :assignedProtocol ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Each communication edge must have at most one assigned protocol." ;
+  ] .
+
+:QuantumSafeAssignmentShape
+  a sh:NodeShape ;
+  sh:targetClass :Protocol ;
+  sh:property [
+    sh:path :hasSecurityCategory ;
+    sh:in ( "hybrid" "quantum_safe" ) ;
+    sh:message "Assignments selected for protected edges must not resolve to purely classical profiles." ;
+  ] .

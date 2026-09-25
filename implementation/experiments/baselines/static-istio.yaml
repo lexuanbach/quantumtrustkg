@@ -1,0 +1,11 @@
+# Descriptor of the Static baseline of Table 1 (Sect. 4.1): a fixed mesh-wide
+# hybrid posture with STRICT PeerAuthentication and ISTIO_MUTUAL DestinationRules.
+# It corresponds to evalStatic in cmd/baseline-compare. No program reads this file.
+# It documents the baseline that the Go harness implements.
+kind: StaticIstioBaseline
+metadata:
+  name: mesh-wide-hybrid
+spec:
+  peerAuthenticationMode: STRICT
+  destinationRuleMode: ISTIO_MUTUAL
+  fixedProfile: HybridProfile

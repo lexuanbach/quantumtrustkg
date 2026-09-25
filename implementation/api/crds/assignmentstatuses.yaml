@@ -1,0 +1,57 @@
+# CustomResourceDefinition for AssignmentStatus (Sect. 3, implementation).
+#
+# This is the controller-owned record of one edge: the source and destination
+# service, the desired and active profile, the state and the reason (spec) and the
+# observed generation, evaluation time and phase (status subresource). The
+# controller creates and updates it after every decision, which means it is the auditable
+# status of the paper. The writer is KubernetesStatusWriter.WriteAssignmentStatus.
+# Limitation: the writer also sets requiredSecurityLevel and requirementReason in
+# spec, and this schema does not declare them, which means an API server that prunes
+# unknown fields drops them.
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: assignmentstatuses.quantumtrustkg.io
+spec:
+  group: quantumtrustkg.io
+  scope: Namespaced
+  names:
+    plural: assignmentstatuses
+    singular: assignmentstatus
+    kind: AssignmentStatus
+    shortNames:
+      - asg
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                sourceService:
+                  type: string
+                destinationService:
+                  type: string
+                desiredProfile:
+                  type: string
+                activeProfile:
+                  type: string
+                state:
+                  type: string
+                reason:
+                  type: string
+            status:
+              type: object
+              properties:
+                observedGeneration:
+                  type: integer
+                lastEvaluatedAt:
+                  type: string
+                phase:
+                  type: string
+      subresources:
+        status: {}

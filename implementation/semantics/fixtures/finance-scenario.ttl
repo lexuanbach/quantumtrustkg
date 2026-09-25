@@ -1,0 +1,59 @@
+@prefix : <http://quantumtrustkg.io/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:Frontend a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile .
+
+:Auth a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile, :QuantumSafeProfile .
+
+:Payment a :Service ;
+  :subjectTo :PCIPolicy ;
+  :supportsProfile :QuantumSafeProfile .
+
+:Ledger a :Service ;
+  :subjectTo :PCIPolicy ;
+  :supportsProfile :QuantumSafeProfile .
+
+:Audit a :Service ;
+  :subjectTo :PCIPolicy ;
+  :supportsProfile :QuantumSafeProfile .
+
+:HybridProfile a :Protocol ;
+  :hasSecurityCategory "hybrid" ;
+  :hasOverheadScore "1.2"^^xsd:decimal .
+
+:QuantumSafeProfile a :Protocol ;
+  :hasSecurityCategory "quantum_safe" ;
+  :hasOverheadScore "1.5"^^xsd:decimal .
+
+:DefaultInternalPolicy a :Policy ;
+  :requiresLevel "hybrid" .
+
+:PCIPolicy a :Policy ;
+  :requiresLevel "quantum_safe" .
+
+:frontendToAuth a :Communication ;
+  :sourceService :Frontend ;
+  :destinationService :Auth ;
+  :crossesBoundary "internal" ;
+  :assignedProtocol :HybridProfile .
+
+:authToPayment a :Communication ;
+  :sourceService :Auth ;
+  :destinationService :Payment ;
+  :crossesBoundary "regulated" ;
+  :assignedProtocol :QuantumSafeProfile .
+
+:paymentToLedger a :Communication ;
+  :sourceService :Payment ;
+  :destinationService :Ledger ;
+  :crossesBoundary "regulated" ;
+  :assignedProtocol :QuantumSafeProfile .
+
+:paymentObservation a :Observation ;
+  :observedBy "controller" ;
+  :observedAt "2026-05-09T12:00:00Z"^^xsd:dateTime ;
+  :freshUntil "2036-05-09T12:10:00Z"^^xsd:dateTime .

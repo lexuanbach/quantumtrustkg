@@ -1,0 +1,2 @@
+services,managed_edges,repetitions,compliance_percent_median,latency_ms_median,latency_ms_p95,migration_time_median_s,migration_time_iqr_low_s,migration_time_iqr_high_s,setup_cost_percent,unsafe_promotions,decision_trace_resolution_ms_max
+11,11,30,99.3,9.0,21.0,160,148,175,9.4,0,30

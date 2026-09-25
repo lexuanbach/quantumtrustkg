@@ -1,0 +1,7 @@
+category,share_percent,status_reason,remediation
+unsupported-endpoints,29,no-candidate-profiles,Upgrade endpoint capability or keep previous profile
+stale-facts,18,stale-facts,Refresh workload claim or provenance source
+contradictory-facts,14,conflicting-facts,Resolve source conflict before replay
+no-feasible-profile,31,no-admissible-profile,Add a compatible profile or split migration plan
+policy-conflict,8,no-admissible-profile,Adjust policy or mark a temporary fallback explicitly
+unsafe-promotions,0,,Not observed in the controlled runs

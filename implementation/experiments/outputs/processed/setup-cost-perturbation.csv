@@ -1,0 +1,3 @@
+term,low_value,high_value,compliance_unchanged,controller_latency_unchanged,note
+hybrid_setup_cost_percent,6,15,True,True,+/-25% on calibrated CPU/wire terms
+pure_pqc_setup_cost_percent,9,19,True,True,+/-25% on calibrated CPU/wire terms

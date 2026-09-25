@@ -1,0 +1,4 @@
+scale,services,communication_edges,triples,query_build_ms,rule_filter_ms,controller_est_ms,alloc_mb,promoted_edges,blocked_edges,candidate_profiles_seen,iterations,fixture
+500,500,1000,6390,1.484,0.016,1.540,2.832,936,64,2546,15,../semantics/fixtures/scale-500.ttl
+1000,1000,2000,12736,2.450,0.023,2.535,4.647,1889,111,5041,15,../semantics/fixtures/scale-1000.ttl
+2000,2000,4000,25432,4.360,0.039,4.511,8.883,3758,242,10006,15,../semantics/fixtures/scale-2000.ttl

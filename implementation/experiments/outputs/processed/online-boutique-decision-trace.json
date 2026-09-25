@@ -1,0 +1,30 @@
+{
+  "edge_id": "checkoutToPayment",
+  "source_service": "Checkout",
+  "destination_service": "Payment",
+  "required_class": "quantum_safe",
+  "requirement_reason": "policy:PCIPolicy,inference:pci-regulated-edge,boundary:regulated",
+  "active_profile": "HybridProfile",
+  "selected_profile": "QuantumSafeProfile",
+  "status_reason": "qtpo-selected-minimum-score-profile",
+  "policies": [
+    "PCIPolicy"
+  ],
+  "provenance_source": "online-boutique-fixture",
+  "provenance_fresh_until": "2027-05-10T09:10:00Z",
+  "candidates": [
+    {
+      "name": "HybridProfile",
+      "class": "hybrid",
+      "score": 0.9,
+      "rejected": "policy-or-required-class"
+    },
+    {
+      "name": "QuantumSafeProfile",
+      "class": "quantum_safe",
+      "score": 0.4675
+    }
+  ],
+  "peer_authentication_name": "checkoutToPayment-mtls",
+  "destination_rule_name": "checkoutToPayment-tls"
+}

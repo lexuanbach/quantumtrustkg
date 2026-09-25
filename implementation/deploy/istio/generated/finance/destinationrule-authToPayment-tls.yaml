@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: authToPayment-tls
+  namespace: finance
+  labels:
+    app.kubernetes.io/managed-by: quantumtrustkg
+  annotations:
+    quantumtrustkg.io/edge-id: authToPayment
+    quantumtrustkg.io/profile: QuantumSafeProfile
+    quantumtrustkg.io/trust-boundary: regulated
+spec:
+  host: Payment.finance.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+      sni: Payment.finance.svc.cluster.local
+    connectionPool:
+      tcp:
+        maxConnections: 16

@@ -1,0 +1,37 @@
+# Deployment of the QuantumTrustKG controller (Sect. 3, implementation).
+#
+# One replica of the manager (cmd/manager) runs under the service account of
+# serviceaccount.yaml. Leader election in controllers.StartManager makes extra
+# replicas safe. Port 8080 is the metrics endpoint. The image is a placeholder
+# name, which means it must be replaced by a locally built image.
+#
+# The manager takes no endpoint flags. cmd/manager defines only --fixture,
+# --watch-fixture and --manager, and the graph endpoint is the constant
+# http://fuseki:3030/quantumtrustkg in that file, which matches the fuseki Service
+# and dataset of fuseki.yaml in the same namespace.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quantumtrustkg-controller
+  namespace: quantumtrustkg-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: quantumtrustkg-controller
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: quantumtrustkg-controller
+    spec:
+      serviceAccountName: quantumtrustkg-controller
+      containers:
+        - name: manager
+          image: ghcr.io/example/quantumtrustkg-controller:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: QTKG_NAMESPACE
+              value: quantumtrustkg-system
+          ports:
+            - name: metrics
+              containerPort: 8080

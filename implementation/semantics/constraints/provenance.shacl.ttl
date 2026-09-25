@@ -1,0 +1,21 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix : <http://quantumtrustkg.io/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:ObservationShape
+  a sh:NodeShape ;
+  sh:targetClass :Observation ;
+  sh:property [
+    sh:path :observedAt ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path :freshUntil ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path :observedBy ;
+    sh:minCount 1 ;
+  ] .

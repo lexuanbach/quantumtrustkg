@@ -1,0 +1,43 @@
+@prefix : <http://quantumtrustkg.io/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:Frontend a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile .
+
+:Auth a :Service ;
+  :subjectTo :DefaultInternalPolicy ;
+  :supportsProfile :HybridProfile, :QuantumSafeProfile .
+
+:Payment a :Service ;
+  :subjectTo :PCIPolicy ;
+  :supportsProfile :QuantumSafeProfile .
+
+:Ledger a :Service ;
+  :subjectTo :PCIPolicy ;
+  :supportsProfile :QuantumSafeProfile .
+
+:HybridProfile a :Protocol ;
+  :hasSecurityCategory "hybrid" ;
+  :hasOverheadScore "1.2"^^xsd:decimal .
+
+:QuantumSafeProfile a :Protocol ;
+  :hasSecurityCategory "quantum_safe" ;
+  :hasOverheadScore "1.5"^^xsd:decimal .
+
+:DefaultInternalPolicy a :Policy ;
+  :requiresLevel "hybrid" .
+
+:PCIPolicy a :Policy ;
+  :requiresLevel "quantum_safe" .
+
+:authToPayment a :Communication ;
+  :sourceService :Auth ;
+  :destinationService :Payment ;
+  :crossesBoundary "regulated" ;
+  :assignedProtocol :QuantumSafeProfile .
+
+:staleObservation a :Observation ;
+  :observedBy "controller" ;
+  :observedAt "2025-03-28T12:00:00Z"^^xsd:dateTime ;
+  :freshUntil "2025-03-28T12:01:00Z"^^xsd:dateTime .

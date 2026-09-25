@@ -1,0 +1,62 @@
+# CustomResourceDefinition for QuantumSecurityPolicy (Sect. 3, implementation).
+#
+# A policy states the security class required on a set of communication edges. The
+# operator writes it and the controller only reads it (controllers.PolicyReconciler,
+# parsed by parsePolicy in crd_parsing.go). The selector picks workloads by label,
+# requiredSecurityCategory is the class that feeds Req(e) in gate (i) of the QTPO
+# filter, and allowHybrid switches on the policy-permitted hybrid fallback of Alg. 1.
+# compliance lists obligations such as PCI-DSS, which the runtime uses to infer a
+# quantum-safe requirement on regulated edges. Group quantumtrustkg.io, version
+# v1alpha1, namespaced.
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: quantumsecuritypolicies.quantumtrustkg.io
+spec:
+  group: quantumtrustkg.io
+  scope: Namespaced
+  names:
+    plural: quantumsecuritypolicies
+    singular: quantumsecuritypolicy
+    kind: QuantumSecurityPolicy
+    shortNames:
+      - qsp
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                selector:
+                  type: object
+                  x-kubernetes-preserve-unknown-fields: true
+                requiredSecurityCategory:
+                  type: string
+                  enum:
+                    - classical
+                    - hybrid
+                    - quantum_safe
+                allowHybrid:
+                  type: boolean
+                compliance:
+                  type: array
+                  items:
+                    type: string
+                trustBoundaryPolicy:
+                  type: string
+              required:
+                - requiredSecurityCategory
+            status:
+              type: object
+              properties:
+                observedGeneration:
+                  type: integer
+                phase:
+                  type: string
+      subresources:
+        status: {}
