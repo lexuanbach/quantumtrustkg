@@ -107,3 +107,7 @@ The archive was checked against its `.sha256` file and unpacked into an empty fo
 ## 8. Packaging
 
 `MANIFEST.sha256` lists the SHA-256 of every file except itself, sorted by path, in `sha256sum` format. `python3 scripts/check-manifest.py` checks it. The archive `QuantumTrustKG-ICSOC2026.zip` holds the folder `QuantumTrustKG-ICSOC2026/` with files only (no directory entries), sorted by path, with every file time set to 2026-09-24 00:00 (UTC+7), and was written by Info-ZIP 3.0 as `TZ=UTC zip -X -D`.
+
+## 9. Verification correction (2026-09-28)
+
+The current checker evaluates C32 even with `--skip-timing`: expect 66 passing claim groups (372 values) and 8 skipped groups on intact regenerated results. The current manifest has 195 entries. Section 7 records the earlier release checks and their original counts. The wire runner retries loopback bind conflicts three times and preserves failures after retries; these failures must not be interpreted as timing variance. The regression command is `PYTHONDONTWRITEBYTECODE=1 python3 scripts/test-reproduction-checks.py`.

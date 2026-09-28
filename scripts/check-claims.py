@@ -45,6 +45,7 @@ PROCESSED = DEFAULT_PROCESSED
 DET = "H2/H3 regenerated, deterministic"
 REPLAY = "H1 or model, replayed from canonical record"
 TIMING = "host-dependent measurement"
+TRIALS = "measured trial outcome (checked independently of timing)"
 TOPOLOGY = "computed from committed edge lists"
 CODE = "code or configuration constant"
 DERIVED = "derived from result files"
@@ -496,10 +497,11 @@ def _():
             sub("pure PQ", "0.2", val(HS, "rel_overhead_pct", mode="pure_pq"))]
 
 
-@claim("C32", "CR Sect. 4.3 (ext. Table 10)", "end-to-end wire trials per profile", "30/30", "[M]", TIMING,
+@claim("C32", "CR Sect. 4.3 (ext. Table 10)", "end-to-end wire trials per profile", "30/30", "[M]", TRIALS,
        f"{WT}: successes/trials", f"{MK} wire-tls")
 def _():
-    return [sub(r["profile"], "30/30", f"{r['successes']}/{r['trials']}") for r in rows(WT)]
+    return [sub(p, "30/30", f"{row(WT, profile=p)['successes']}/{row(WT, profile=p)['trials']}")
+            for p in ("classical_tls13", "hybrid_mlkem", "pure_pq")]
 
 
 @claim("C33", "CR Sect. 4.3, Fig. 2(c) hatched bars (ext. Tables 8, 9)", "modelled aggregate setup cost",

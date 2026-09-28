@@ -5,7 +5,7 @@ Output folders below are the temporary folders printed by the scripts (or `$QTKG
 ## `bash scripts/verify.sh`
 
 ```
-PASS: 194 manifest entries
+PASS: 195 manifest entries
 PASS: package hygiene and local-path checks
 Claims: 74 (414 values checked). PASS 74, WARN 0, UNTRACED 0, SKIP 0, FAIL 0
 PASS: camera-ready PDF has 10 pages
@@ -16,7 +16,7 @@ PASS: artifact verification complete
 
 - Step 1: `ok` for `internal/controllers` and `tests/unit` (60 Go tests in total).
 - Step 5: four `rocq compile` lines, or `SKIPPED: Coq/Rocq 9.x not found`.
-- Step 6: `SAME` for 13 result files and for `fixtures/online-boutique.ttl`, then the claim check on the released files (`PASS 74, WARN 0, UNTRACED 0, SKIP 0, FAIL 0`), the check on the regenerated files (`PASS 65, WARN 0, UNTRACED 0, SKIP 9, FAIL 0`) and `PASS: smoke test`.
+- Step 6: `SAME` for 13 result files and for `fixtures/online-boutique.ttl`, then the claim check on the released files (`PASS 74, WARN 0, UNTRACED 0, SKIP 0, FAIL 0`), the check on the regenerated files (`PASS 66, WARN 0, UNTRACED 0, SKIP 8, FAIL 0`) and `PASS: smoke test`.
 - `table1.txt` in the output folder equals camera-ready Table 1:
 
 ```
@@ -32,7 +32,7 @@ Pooled observations 11929 (30 repetitions)
 ## `bash scripts/run-full.sh`
 
 - `SAME` for 18 result files (16 when `kind` is installed) and for the four fixtures `online-boutique.ttl`, `scale-500.ttl`, `scale-1000.ttl`, `scale-2000.ttl`.
-- `check-claims` on the regenerated files with timing skipped: `Claims: 74 (369 values checked). PASS 65, WARN 0, UNTRACED 0, SKIP 9, FAIL 0`.
+- `check-claims` on the regenerated files with timing skipped: `Claims: 74 (372 values checked). PASS 66, WARN 0, UNTRACED 0, SKIP 8, FAIL 0`.
 - The second regenerated check (all claims) lists the timing claims that differ on this host: C30, C31, C34 (handshake), E08 (wire p50), E11 (H3 timings), E20 (data-model timings). This is expected. Values in the neighbourhood of the paper are normal: handshake medians 8 to 11 ms with overheads of a few percent either way, wire p50 9 to 11 ms, H3 totals 1 to 6 ms, rdflib query about 1 s.
 - `results-figure.pdf` looks the same as Fig. 2 of the camera-ready (identical at 200 dpi with LaTeX). `results-figure-regenerated.pdf` differs only in the two solid bars of panel (c).
 - `tables.txt` holds Table 1 and extended Tables 6 and 7 (Table 7 also shows the 50% row, which the paper omits).
@@ -59,3 +59,5 @@ Pooled observations 11929 (30 repetitions)
 - OpenSSL older than 3.5: `run-full.sh` prints a NOTE and skips the handshake and wire runs. The committed files stay in use.
 - No matplotlib or rdflib: a NOTE, and the figure or data-model run is skipped.
 - No LaTeX: Fig. 2 is drawn with `--no-tex`. Fonts differ and the numbers are the same.
+
+The wire success count (C32) is always checked, including with `--skip-timing`. A failed start, partial negotiation, or missing profile must not be dismissed as a timing difference. The wire runner retries port-bind conflicts up to three times.

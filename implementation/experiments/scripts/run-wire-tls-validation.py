@@ -192,28 +192,23 @@ def run_local_group(group: str, trials: int, cert: Path, key: Path) -> tuple[str
     Returns (status, negotiated group, number of successes, median ms, p95 ms,
     tail of the last output). The server is stopped in the finally block, with a
     kill if it does not exit within two seconds."""
-    port = reserve_port()
-    server_cmd = [
-        "openssl",
-        "s_server",
-        "-accept",
-        str(port),
-        "-cert",
-        str(cert),
-        "-key",
-        str(key),
-        "-tls1_3",
-        "-groups",
-        group,
-        "-quiet",
-    ]
-    server = subprocess.Popen(server_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    # Give the server time to bind. If it has exited by then (for example because
-    # the group is not accepted), report a failed start and skip the trials.
-    time.sleep(0.25)
-    if server.poll() is not None:
+    # Reserve and bind the same IPv4 loopback address. Another process may
+    # claim the released port before OpenSSL starts, so retry only bind conflicts.
+    for attempt in range(3):
+        port = reserve_port()
+        server_cmd = [
+            "openssl", "s_server", "-accept", f"127.0.0.1:{port}",
+            "-cert", str(cert), "-key", str(key), "-tls1_3",
+            "-groups", group, "-quiet",
+        ]
+        server = subprocess.Popen(server_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        time.sleep(0.25)
+        if server.poll() is None:
+            break
         stdout, stderr = server.communicate()
-        return "failed-server-start", "", 0, 0.0, 0.0, (stdout + stderr)[-240:]
+        output = stdout + stderr
+        if "address already in use" not in output.lower() or attempt == 2:
+            return "failed-server-start", "", 0, 0.0, 0.0, output[-240:]
 
     successes = 0
     negotiated = ""

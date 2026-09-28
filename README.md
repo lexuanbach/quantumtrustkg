@@ -141,3 +141,7 @@ None of these changes a reported number. The paper PDFs of this release (2026-09
 ## License and citation
 
 Code under Apache-2.0, documentation and data under CC BY 4.0 (see `LICENSE`, `LICENSES/`, `THIRD_PARTY_NOTICES.md`). Cite the paper as given in `CITATION.cff`.
+
+## Reproduction-check correction (2026-09-28)
+
+The TLS wire runner now binds the same IPv4 loopback address used to choose its port and retries a bind conflict up to three times. Claim C32 (30 successful trials per profile) is always checked, including when timing comparisons are skipped. Missing profile rows also fail. Run `PYTHONDONTWRITEBYTECODE=1 python3 scripts/test-reproduction-checks.py` for regression checks. Earlier versions could print a full-run PASS after a failed wire-server start because C32 was classified with timing claims. This correction changes the verification behavior, not the released measurements.
