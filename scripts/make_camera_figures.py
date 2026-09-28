@@ -165,7 +165,7 @@ def main():
     ax1.set_xlim(scales[0] / 1.35, scales[-1] * 1.35)
     ax1.set_xlabel("Services (log scale)")
     ax1.set_ylabel(f"{pct} of managed edges")
-    ax1.set_title("(a) Real Alibaba graphs", loc="left", pad=3)
+    ax1.set_title("(a) Alibaba graphs", loc="left", pad=3)
 
     # Panel (b): mass staleness.
     ax2.bar(xs, q_block, width=4.2, color=BLOCK_FILL, edgecolor=STYLE["QTKG"]["color"],
