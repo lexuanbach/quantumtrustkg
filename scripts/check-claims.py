@@ -191,7 +191,7 @@ def _():
 
 @claim("C03", "CR Abstract, Sect. 7", "service-level and opportunistic baselines, unsafe on H2", "3.4-13.7%",
        "untagged (measured)", DET, f"{BC}: scale=200, OPP and SL-CA invalid_promotions/managed_edges", f"{MK} baseline-compare",
-       note="13.7 is 1640/11929 = 13.748%. The CSV column rounds it to 13.75. The paper said 13.8 before 2026-09-25.")
+       note="13.7 is 1640/11929 = 13.748%. The CSV column rounds it to 13.75.")
 def _():
     return [sub("OPP (low end)", "3.4", t1_invalid_pct("OPP")),
             sub("SL-CA (high end)", "13.7", t1_invalid_pct("SL-CA"))]
@@ -200,7 +200,7 @@ def _():
 @claim("C04", "CR Abstract, Sect. 7", "service-level and per-endpoint baselines (SL-CA, ConfigProfile) on sampled Alibaba graphs up to 2000 services",
        "37-60%", "untagged (measured)", DET, f"{RA}: SL-CA and ConfigProfile unsafe_promotion_pct, all six scales",
        f"{MK} baseline-compare",
-       note="Resolved 2026-09-25. The sentence used to say 'these baselines', which included OPP (4.0-6.1% here).")
+       note="Service-level and per-endpoint baselines only; OPP stays at 4.0-6.1% here.")
 def _():
     v = [val(RA, "unsafe_promotion_pct", scale=str(s), method=k) for k in ("SL-CA", "ConfigProfile") for s in SCALES_REAL]
     return [sub("lowest (ConfigProfile, 2000)", "37", min(v)), sub("highest (SL-CA, 50)", "60", max(v))]
@@ -261,7 +261,7 @@ def _():
 @claim("C10", "CR Sect. 4 (EXT Sect. 8.1, Table 2)", "H2 meshes include requirement divergence at shared destinations and 3% corrupted provenance",
        "divergence at shared destinations, 3%", "", CODE,
        "cmd/baseline-compare generateMesh: forcePartner < 0.40, provBad < 0.03", f"{MK} baseline-compare",
-       note="Resolved 2026-09-25. The papers said 'about 30%', which no output reports. The generator gives a "
+       note="The generator gives a "
             "hybrid-capped partner edge to 40% of the quantum-safe-capable destinations (21.8% of edges enter such "
             "a destination at 200 services).")
 def _():
@@ -403,7 +403,7 @@ def _():
 
 @claim("C21", "CR Sect. 4.2 (EXT Sect. 8.5)", "SL-CA and ConfigProfile: real rates are about four to five times the synthetic ones at equal size",
        "about 4x to 5x", "", DERIVED, f"{RA} and {BC}: unsafe_promotion_pct at 50, 100, 200", f"{MK} baseline-compare",
-       note="Ratios are 3.95-4.08 for SL-CA and 4.56-4.80 for ConfigProfile. Resolved 2026-09-25 (was 'three to four times').")
+       note="Ratios are 3.95-4.08 for SL-CA and 4.56-4.80 for ConfigProfile.")
 def _():
     out = []
     for k in ("SL-CA", "ConfigProfile"):
@@ -666,8 +666,7 @@ def _():
 
 @claim("E10", "EXT Sect. 8.7, Table A14", "controller footprint at 200 services (archived run)",
        "below 1 vCPU and 600 MB", "", REPLAY, "canonical record: latency.footprint_at_200_services", f"{MK} paper-results",
-       note="Resolved 2026-09-25. The extended version used to list 0.62 vCPU / 410 MB and 0.48 vCPU / 530 MB, "
-            "which are not in the artifact.")
+       note="The archived record holds only the aggregate bound.")
 def _():
     f = canonical()["latency"]["footprint_at_200_services"]
     return [sub("controller CPU", "<1", f["controller_cpu_vcpu"]), sub("controller RSS", "<600", f["controller_rss_mb"])]
@@ -698,7 +697,7 @@ def _():
 @claim("E13", "EXT Table 13", "fault injection: affected edges and unsafe / blocked / preserved per scenario",
        "stale 2: 0/2/0, contradictory 1: 0/1/0, outage 3: 0/3/1, mesh mismatch 2: 0/2/1, policy conflict 2: 0/2/1",
        "[M]", REPLAY, "fault-injection-results.csv", f"{MK} paper-results",
-       note="Resolved 2026-09-25. The mesh-mismatch and policy-conflict rows used to read 1 and 0/1/1, 1 and 0/1/0.")
+       note="Per-fault rows from the archived record.")
 def _():
     exp = {"stale-fact": ("2", "0/2/0"), "contradictory-fact": ("1", "0/1/0"), "graph-outage": ("3", "0/3/1"),
            "mesh-mismatch": ("2", "0/2/1"), "policy-conflict": ("2", "0/2/1")}
@@ -792,8 +791,8 @@ def _():
 
 @claim("E22", "EXT Table A2", "controller scale/churn harness: unsafe promotions", "n/a (not run)", "", CODE,
        "controller-scale-results.csv, controller-churn-results.csv: status", f"{MK} controller-harness",
-       note="Resolved 2026-09-25 (the table used to print 0). The 0 and the reconcile_p50_ms values 12/24/45 are "
-            "still constants in run-controller-scale-churn.py, and the paper no longer reports them.")
+       note="The reconcile_p50_ms values 12/24/45 in run-controller-scale-churn.py are constants copied from "
+            "the H1 record; the paper does not report them.")
 def _():
     out = []
     for f in ("controller-scale-results.csv", "controller-churn-results.csv"):

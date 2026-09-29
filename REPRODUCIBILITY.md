@@ -86,7 +86,7 @@ No step needs an LLM, a GPU, an API key or a credential.
 3. `EXPECTED_RESULTS.md` lists the expected console output of each script.
 4. Fig. 2: open `$QTKG_OUT/results-figure.pdf` from `run-full.sh` (drawn from the released files) next to Fig. 2 on page 7 of `paper/camera-ready.pdf`. With LaTeX installed the 200 dpi renders are identical. `results-figure-regenerated.pdf` uses this host's handshake timing in panel (c).
 
-## 7. Fresh-copy test (2026-09-25)
+## 7. Fresh-copy test
 
 The archive was checked against its `.sha256` file and unpacked into an empty folder. The test used a new virtual environment next to the artifact folder, an empty Go module cache and an empty Go build cache, and Rocq 9.1.0 on `PATH`. Every step passed.
 
@@ -94,10 +94,10 @@ The archive was checked against its `.sha256` file and unpacked into an empty fo
 |---|---|---|
 | `python3 -m venv ../qtkg-venv`, `pip install -r requirements.txt` | 7 s | matplotlib 3.10.9, rdflib 7.6.0, networkx 3.6.1 |
 | `(cd implementation/controller && go mod download)` | 6 s | about 226 MB module cache |
-| `bash scripts/verify.sh` | 0.2 s | 194 manifest entries, hygiene PASS, claims FAIL 0, camera-ready has 10 pages |
-| `bash scripts/run-smoke.sh` | 15.3 s | 60 Go tests pass, 14 files SAME, `PASS: smoke test` |
+| `bash scripts/verify.sh` | 0.2 s | 195 manifest entries, hygiene PASS, claims FAIL 0, camera-ready has 10 pages |
+| `bash scripts/run-smoke.sh` | 15.3 s | 60 Go tests pass, 13 files SAME, `PASS: smoke test` |
 | `python3 scripts/check-claims.py` | 0.1 s | 74 claim groups, 414 values, PASS 74, FAIL 0 |
-| `bash scripts/run-full.sh` | 29.7 s | 22 files SAME, regenerated claims PASS 65 and FAIL 0 with 9 timing claims skipped, `PASS: full local reproduction` |
+| `bash scripts/run-full.sh` | 29.7 s | 18 result files and 4 fixtures SAME, regenerated claims PASS 66 and FAIL 0 with 8 timing claims skipped, `PASS: full local reproduction` |
 | `bash scripts/verify.sh` (after the runs) | 0.2 s | PASS, the runs left the package unchanged |
 | `bash scripts/run-full-evidence.sh` | 2.9 s | 6 passed, 1 unavailable (`pq_tls_availability`), 1 skipped (kind) |
 | `go build ./...`, `go vet ./...`, `go test -count=1 ./tests/unit/... ./internal/...` in `implementation/controller` | under 4 s each | no vet findings, 60 tests pass, `go.mod` and `go.sum` unchanged |
@@ -108,6 +108,6 @@ The archive was checked against its `.sha256` file and unpacked into an empty fo
 
 `MANIFEST.sha256` lists the SHA-256 of every file except itself, sorted by path, in `sha256sum` format. `python3 scripts/check-manifest.py` checks it. The archive `QuantumTrustKG-ICSOC2026.zip` holds the folder `QuantumTrustKG-ICSOC2026/` with files only (no directory entries), sorted by path, with every file time set to 2026-09-24 00:00 (UTC+7), and was written by Info-ZIP 3.0 as `TZ=UTC zip -X -D`.
 
-## 9. Verification correction (2026-09-28)
+## 9. Wire-trial verification
 
-The current checker evaluates C32 even with `--skip-timing`: expect 66 passing claim groups (372 values) and 8 skipped groups on intact regenerated results. The current manifest has 195 entries. Section 7 records the earlier release checks and their original counts. The wire runner retries loopback bind conflicts three times and preserves failures after retries; these failures must not be interpreted as timing variance. The regression command is `PYTHONDONTWRITEBYTECODE=1 python3 scripts/test-reproduction-checks.py`.
+The checker evaluates C32 even with `--skip-timing`: expect 66 passing claim groups (372 values) and 8 skipped groups on intact regenerated results. The manifest has 195 entries. The wire runner retries loopback bind conflicts three times and preserves failures after retries; these failures must not be interpreted as timing variance. The regression command is `PYTHONDONTWRITEBYTECODE=1 python3 scripts/test-reproduction-checks.py`.

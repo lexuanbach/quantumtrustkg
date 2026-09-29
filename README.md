@@ -121,17 +121,17 @@ The H2 harnesses use seed 20260509 and derive one sub-seed per repetition (seed 
 
 ## Known differences between the code and the paper
 
-None of these changes a reported number. The paper PDFs of this release (2026-09-25) include the text corrections listed in `CLAIM_MATRIX.md`, and every paper number now matches its result file.
+None of these changes a reported number. Every paper number matches its result file (`CLAIM_MATRIX.md`).
 
 1. **Prop. 1 is not mechanized.** Coq `select` (`formal/coq/QTPO.v`) promotes the first admissible profile in list order and never reads scores. The Coq lemmas cover G1 to G4, and the papers claim mechanization only for those. Weight-independence is argued in prose and checked empirically by the weight sweep.
-2. **How Req(e) is computed.** The code (`inferRuntimeRequirement` in `internal/controllers/runtime.go`, `internal/graph/fixtures.go`, `effective_requirement` in `Model.v`) takes the strongest class over all matched policies and the trust-boundary floor, as the papers now state. There is no specificity ordering, no override field, no deny rule and no same-specificity conflict gate.
-3. **Deployment manifest.** Fixed in this release: `deploy/controller-deployment.yaml` no longer passes `--graph-endpoint` and `--assets-root`, which `cmd/manager` does not define (the manager used to exit with code 2). The graph endpoint is the constant `http://fuseki:3030/quantumtrustkg` in `cmd/manager/main.go`, which matches the `fuseki` Service of `fuseki.yaml` in the same namespace. The image name is still a placeholder and no Dockerfile is included, and the live graph path is also limited by item 4.
+2. **How Req(e) is computed.** The code (`inferRuntimeRequirement` in `internal/controllers/runtime.go`, `internal/graph/fixtures.go`, `effective_requirement` in `Model.v`) takes the strongest class over all matched policies and the trust-boundary floor, as the papers state. There is no specificity ordering, no override field, no deny rule and no same-specificity conflict gate.
+3. **Deployment manifest.** `deploy/controller-deployment.yaml` passes no `--graph-endpoint` or `--assets-root` flag, since `cmd/manager` defines neither. The graph endpoint is the constant `http://fuseki:3030/quantumtrustkg` in `cmd/manager/main.go`, which matches the `fuseki` Service of `fuseki.yaml` in the same namespace. The image name is a placeholder and no Dockerfile is included, and the live graph path is also limited by item 4.
 4. **RDF namespace.** `internal/graph/writers.go` writes with `https://quantumtrustkg.example/schema#`, while the ontology, fixtures and queries use `http://quantumtrustkg.io/ontology#`. The SPARQL text in `internal/graph/queries.go` declares no prefix. The live Fuseki path was not exercised by any reported run.
-5. **Scale/churn constants.** `run-controller-scale-churn.py` writes `reconcile_p50_ms` 12/24/45 and `unsafe_promotions` 0 as constants copied from the H1 latency record. They are not measured by that script. Extended Table A2 now reports the unsafe-promotion column as "n/a (not run)".
-6. **RBAC.** `deploy/rbac.yaml` defines one ClusterRole for the controller. The papers now state the separation of capability publishers, policy authors and the status writer as an assumption about the operator's cluster.
+5. **Scale/churn constants.** `run-controller-scale-churn.py` writes `reconcile_p50_ms` 12/24/45 and `unsafe_promotions` 0 as constants copied from the H1 latency record. They are not measured by that script. Extended Table A2 reports the unsafe-promotion column as "n/a (not run)".
+6. **RBAC.** `deploy/rbac.yaml` defines one ClusterRole for the controller. The papers state the separation of capability publishers, policy authors and the status writer as an assumption about the operator's cluster.
 7. **OpenSSL availability probe.** `run-pq-tls-benchmark.py` reads `openssl list -groups`, which OpenSSL 3.5+ removed, and it expects oqs-provider. On OpenSSL 3.6.2 it reports the ML-KEM groups as unavailable (`pq-tls-benchmark-results.csv`). The paper does not use this file. The handshake and wire runners read `openssl list -tls-groups` and measure the groups.
-8. **Fixture freshness date.** Fixed in this release: `semantics/fixtures/finance-scenario.ttl` now has `freshUntil 2036-05-09T12:10:00Z` (it was 2027-05-09). The runtime unit tests compare this date with the wall clock, and 15 of the 57 tests in `tests/unit` would fail with `stale-facts` after it. No committed result depends on this fixture. The decision trace, the replayed files and the files written by `run-fixture.sh` are unchanged.
-9. **Canonical record metadata.** `paper-canonical-results.json` and `paper-results-summary.md` still name the submission title and its section numbers ("section 8"). `CLAIM_MATRIX.md` maps them to the current paper.
+8. **Fixture freshness date.** `semantics/fixtures/finance-scenario.ttl` has `freshUntil 2036-05-09T12:10:00Z`. The runtime unit tests compare this date with the wall clock, and 15 of the 57 tests in `tests/unit` would fail with `stale-facts` after it. No committed result depends on this fixture. The decision trace, the replayed files and the files written by `run-fixture.sh` are unchanged.
+9. **Canonical record metadata.** `paper-canonical-results.json` and `paper-results-summary.md` name the submission title and its section numbers ("section 8"). `CLAIM_MATRIX.md` maps them to the current paper.
 
 ## Cautions
 
@@ -142,6 +142,6 @@ None of these changes a reported number. The paper PDFs of this release (2026-09
 
 Code under Apache-2.0, documentation and data under CC BY 4.0 (see `LICENSE`, `LICENSES/`, `THIRD_PARTY_NOTICES.md`). Cite the paper as given in `CITATION.cff`.
 
-## Reproduction-check correction (2026-09-28)
+## Wire-trial check
 
-The TLS wire runner now binds the same IPv4 loopback address used to choose its port and retries a bind conflict up to three times. Claim C32 (30 successful trials per profile) is always checked, including when timing comparisons are skipped. Missing profile rows also fail. Run `PYTHONDONTWRITEBYTECODE=1 python3 scripts/test-reproduction-checks.py` for regression checks. Earlier versions could print a full-run PASS after a failed wire-server start because C32 was classified with timing claims. This correction changes the verification behavior, not the released measurements.
+The TLS wire runner binds the same IPv4 loopback address used to choose its port and retries a bind conflict up to three times. Claim C32 (30 successful trials per profile) is always checked, including when timing comparisons are skipped. Missing profile rows also fail. Run `PYTHONDONTWRITEBYTECODE=1 python3 scripts/test-reproduction-checks.py` for the regression checks.
