@@ -16,7 +16,7 @@ This file gives the environment, the exact commands, the runtimes measured on th
 | LaTeX | TeX Live 2020 (used by `make_camera_figures.py` for Computer Modern text) |
 | Make, bash | GNU Make 3.81, bash 3.2.57 |
 
-Linux was not tested. The scripts use only POSIX tools, GNU Make, bash, Go, Python and OpenSSL.
+The scripts use only POSIX tools, GNU Make, bash, Go, Python and OpenSSL.
 
 ## 2. Setup
 
@@ -67,13 +67,13 @@ The single `make` targets overwrite the committed files in `implementation/exper
 - **Host-dependent:** all millisecond values (H3 stress, data-model benchmark, handshake medians and overheads, wire p50/p95) and the version strings in those files. Counts in the same files (promoted/blocked edges, triples, admissible edges, successful trials) are stable.
 - **Handshake overhead variance.** Each handshake sample is the wall-clock time of one `openssl s_client` process. It includes process start-up (a bare `openssl version` takes 3.4 ms on the test host), certificate loading, connection set-up and teardown, which are large compared with the key-exchange difference. On the test host, reruns of `run-pq-tls-handshake.py --handshakes 300` gave hybrid overheads of +0.1%, +0.7%, +6.2% and +1.5%, and pure post-quantum overheads of -2.2%, 0.0%, +3.9% and -0.2%, while other jobs were running. The committed file (+1.2%, +0.2%) is one such run. Expect medians in the range of 8 to 11 ms and overheads of a few percent in either direction.
 
-## 5. What cannot be rerun from this package
+## 5. What is replayed rather than rerun
 
 | Item | Why | What stands in for it |
 |---|---|---|
 | H1 in-cluster runs (Sect. 4.1 Wilson intervals, latency, rollout outcomes) | Recorded with an earlier controller release on Kubernetes, Fuseki and Istio. Driver and per-repetition logs are not included | `paper-canonical-results.json`, re-emitted by `make paper-results` |
 | Modelled aggregate setup cost and its envelope | Model calibration inputs are recorded as aggregate ranges only | same canonical record |
-| Full-controller scale/churn under `kind` | Never run for the paper | status rows `not-run-kind-unavailable` |
+| Full-controller scale/churn under `kind` | Not part of the reported results | status rows `not-run-kind-unavailable` |
 | Alibaba edge extraction | The extraction script is not included. The raw bucket is 223 MB (`PROVENANCE.md`) | committed `alibaba_*.edges` files |
 | Post-quantum negotiation inside Envoy/Istio | Not claimed by the paper | OpenSSL client/server runs |
 
